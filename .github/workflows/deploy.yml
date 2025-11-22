@@ -22,10 +22,10 @@ jobs:
         run: npm install # Instala todo lo que está en package.json
 
       - name: Build project
-        run: npm run build # Ejecuta el comando que genera la carpeta 'dist'
+        run: ./node_modules/.bin/vite build
         
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3 
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist # Le dice que suba el contenido de la carpeta 'dist'
