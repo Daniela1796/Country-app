@@ -1,32 +1,31 @@
-name: Deploy to GitHub Pages (Using Action)
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main # o 'master'
+      - main # <-- Verifica si tu rama es 'main' o 'master'
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Versión recomendada
+          node-version: '20'
 
-      - name: Install Dependencies
-        run: npm install # O yarn install
+      - name: Install dependencies
+        run: npm install 
 
-      - name: Build
-        run: npm run build # O yarn build (Asegúrate que tu package.json funciona localmente)
+      - name: Build project
+        run: npm run build # <-- Usamos el build simple aquí
         
-      - name: Deploy to GitHub Pages
-        uses: joschi/vite-pages-action@v1 # <--- ¡Esta es la acción que encontraste!
+      - name: Deploy to GitHub Pages # <--- ¡Usamos la acción popular y conocida!
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          # Necesitas configurar la base si la usaste en vite.config.js
-          base_path: /Country-app/ # <-- ¡Pon aquí el nombre de tu repositorio!
-          # El token es importante para que la acción pueda publicar
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist # El nombre de la carpeta de salida de Vite
