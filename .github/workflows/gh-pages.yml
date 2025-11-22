@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages (Using Action)
+
+on:
+  push:
+    branches:
+      - main # o 'master'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Versión recomendada
+
+      - name: Install Dependencies
+        run: npm install # O yarn install
+
+      - name: Build
+        run: npm run build # O yarn build (Asegúrate que tu package.json funciona localmente)
+        
+      - name: Deploy to GitHub Pages
+        uses: joschi/vite-pages-action@v1 # <--- ¡Esta es la acción que encontraste!
+        with:
+          # Necesitas configurar la base si la usaste en vite.config.js
+          base_path: /Country-app/ # <-- ¡Pon aquí el nombre de tu repositorio!
+          # El token es importante para que la acción pueda publicar
+          token: ${{ secrets.GITHUB_TOKEN }}
