@@ -21,8 +21,6 @@ jobs:
       - name: Make build script executable (FIX)
         run: chmod +x ./node_modules/.bin/vite 
 
-      - name: Build project
-        run: ./node_modules/.bin/vite build # <-- Usa el comando simple aquí    
       - name: Install dependencies
         run: npm install # Instala todo lo que está en package.json
 
